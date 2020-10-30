@@ -30,7 +30,7 @@ void OverlayForm::displayOverlay() {
 
     for (int i = 0; i < overlay.height(); i++) {
         for (int j = 0; j < overlay.width(); j++) {
-            if (overlay.pixelColor(i, j).rgb() == 0xffffffff) {
+            if (overlay.pixel(i, j) == 0xffffffff) {
                 overlay.setPixel(i, j, 0x00000000);
             }
         }
@@ -61,7 +61,7 @@ void OverlayForm::toggleOverlay() {
 //refactor everything below this to a server class later for reuse in b/c
 void OverlayForm::initSocket() {
     udpSocket = new QUdpSocket(this);
-    udpSocket->bind(QHostAddress::LocalHost, 420);
+    udpSocket->bind(QHostAddress::AnyIPv4, 420);
 
     connect(udpSocket, &QUdpSocket::readyRead, this, &OverlayForm::readPendingDatagrams);
 }
