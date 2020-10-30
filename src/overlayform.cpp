@@ -25,7 +25,7 @@ void OverlayForm::displayImage() {
 //refactor everything below this to a server class later for reuse in b/c
 void OverlayForm::initSocket() {
     udpSocket = new QUdpSocket(this);
-    udpSocket->bind(QHostAddress::LocalHost, 420);
+    udpSocket->bind(QHostAddress::AnyIPv4, 420);
 
     connect(udpSocket, &QUdpSocket::readyRead, this, &OverlayForm::readPendingDatagrams);
 }
