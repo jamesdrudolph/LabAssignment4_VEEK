@@ -42,6 +42,7 @@ void OverlayForm::displayOverlay() {
     overlaidScene->addPixmap(pixmapBase);
     overlaidScene->addPixmap(pixmapOverlay);
 
+    overlayShowing = true;
     ui->graphicsView->setScene(overlaidScene);
 }
 
