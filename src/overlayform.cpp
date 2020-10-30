@@ -1,8 +1,6 @@
 #include "overlayform.h"
 #include "ui_overlayform.h"
 
-#include <iostream>
-
 OverlayForm::OverlayForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::OverlayForm)
@@ -34,23 +32,29 @@ void OverlayForm::initSocket() {
 
 void OverlayForm::readPendingDatagrams() {
     while (udpSocket->hasPendingDatagrams()) {
-        QNetworkDatagram datagram = udpSocket->receiveDatagram();
+        QByteArray datagram;
+        datagram.resize(udpSocket->pendingDatagramSize());
+
+        QHostAddress sender;
+        quint16 senderPort;
+
+        udpSocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
         processDatagram(datagram);
     }
 }
 
-void OverlayForm::processDatagram(QNetworkDatagram datagram) {
-    if (datagram.data() == "START_IMAGE_SEND") {
+void OverlayForm::processDatagram(QByteArray datagram) {
+    if (datagram.data() == QStringLiteral("START_IMAGE_SEND")) {
         qDebug() << "received START_IMAGE_SEND";
         imageData.clear();
         receivingImage = true;
-    } else if (datagram.data() == "END_IMAGE_SEND") {
+    } else if (datagram.data() == QStringLiteral("END_IMAGE_SEND")) {
         qDebug() << "received END_IMAGE_SEND";
         displayImage();
         receivingImage = false;
     } else if (receivingImage) {
-        qDebug() << "received " << datagram.data().length() << " bytes of image data";
-        imageData.append(datagram.data());
+        qDebug() << "received " << datagram.length() << " bytes of image data";
+        imageData.append(datagram);
         return;
     }
 }

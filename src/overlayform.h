@@ -1,7 +1,6 @@
 #ifndef OVERLAYFORM_H
 #define OVERLAYFORM_H
 
-#include <QNetworkDatagram>
 #include <QUdpSocket>
 #include <QWidget>
 
@@ -24,7 +23,7 @@ private:
     bool receivingImage = false;
     void initSocket();
     void readPendingDatagrams();
-    void processDatagram(QNetworkDatagram datagram);
+    void processDatagram(QByteArray datagram);
     void displayImage();
 };
 
