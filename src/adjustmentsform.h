@@ -27,6 +27,8 @@ private:
     QImage orignalImage;
     QImage adjustedImage;
     bool receivingImage = false;
+    int contrastAdjust = 0;
+    int brightnessAdjust = 0;
 
     void initSocket();
     void readPendingDatagrams();

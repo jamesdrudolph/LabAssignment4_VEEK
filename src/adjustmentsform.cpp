@@ -41,6 +41,7 @@ void AdjustmentsForm::adjustBrigtness(int adjustFactor) {
     adjustedImage.setColorTable(colors);
 
     QPixmap qPixmap = QPixmap::fromImage(adjustedImage);
+    delete baseScene;
     baseScene = new QGraphicsScene();
     baseScene->addPixmap(qPixmap);
 
@@ -76,6 +77,7 @@ void AdjustmentsForm::adjustContrast(int adjustFactor) {
     adjustedImage.setColorTable(colors);
 
     QPixmap qPixmap = QPixmap::fromImage(adjustedImage);
+    delete baseScene;
     baseScene = new QGraphicsScene();
     baseScene->addPixmap(qPixmap);
 
@@ -124,10 +126,14 @@ void AdjustmentsForm::processDatagram(QByteArray datagram) {
         receivingImage = false;
     } else if (datagram.startsWith("BRIGHTNESS")) {
         qDebug() << "received BRIGHTNESS";
-        adjustBrigtness(std::stoi(datagram.split(':')[1].data()));
+        brightnessAdjust = std::stoi(datagram.split(':')[1].data());
+        adjustContrast(contrastAdjust);
+        adjustBrigtness(brightnessAdjust);
     } else if (datagram.startsWith("CONTRAST")) {
         qDebug() << "received CONTRAST";
-        adjustContrast(std::stoi(datagram.split(':')[1].data()));
+        contrastAdjust = std::stoi(datagram.split(':')[1].data());
+        adjustContrast(contrastAdjust);
+        adjustBrigtness(brightnessAdjust);
     }else if (receivingImage) {
         qDebug() << "received " << datagram.length() << " bytes of image data";
         imageData.append(datagram);
