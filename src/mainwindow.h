@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+#include "adjustmentsform.h"
 #include "overlayform.h"
 
 QT_BEGIN_NAMESPACE
@@ -19,6 +20,8 @@ public:
 
 private slots:
     void on_btnOverlayForm_clicked();
+
+    void on_btnBrightnessForm_clicked();
 
 private:
     Ui::MainWindow *ui;

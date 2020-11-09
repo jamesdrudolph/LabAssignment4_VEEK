@@ -20,3 +20,10 @@ void MainWindow::on_btnOverlayForm_clicked()
     ow->setAttribute(Qt::WA_DeleteOnClose);
     ow->show();
 }
+
+void MainWindow::on_btnBrightnessForm_clicked()
+{
+    AdjustmentsForm *af = new AdjustmentsForm;
+    af->setAttribute(Qt::WA_DeleteOnClose);
+    af->show();
+}

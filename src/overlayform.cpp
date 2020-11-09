@@ -12,6 +12,7 @@ OverlayForm::OverlayForm(QWidget *parent) :
 OverlayForm::~OverlayForm()
 {
     delete ui;
+    delete udpSocket;
 }
 
 void OverlayForm::displayImage() {
