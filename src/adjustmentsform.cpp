@@ -49,6 +49,7 @@ void AdjustmentsForm::adjustBrigtness(int adjustFactor) {
 }
 
 void AdjustmentsForm::adjustContrast(int adjustFactor) {
+    adjustFactor = (int)(2.55*(float)adjustFactor);
     std::vector<int> histogram(256,0);
     std::vector<float> cumulative_probability(256,0);
     std::vector<int> hist_equalized(256,0);
